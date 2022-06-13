@@ -11,7 +11,7 @@ use iggyvolz\BinaryData\Writer;
 
 #[Attribute(Attribute::TARGET_PROPERTY | Attribute::TARGET_PARAMETER)]
 #[TestCase("\x01x", "x", constructorArgs: [new Byte])]
-final class LengthPrefixedString extends Definition
+class LengthPrefixedString extends Definition
 {
     public function __construct(public readonly Definition $prefix)
     {
