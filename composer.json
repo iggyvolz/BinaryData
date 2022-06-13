@@ -1,6 +1,7 @@
 {
   "name": "iggyvolz/binary-data",
   "description": "Read/write integers and string",
+  "license": "0BSD",
   "require": {
     "php": "8.1.*",
     "php-64bit": "*"
