@@ -12,10 +12,19 @@ use ReflectionParameter;
 
 #[Attribute(Attribute::TARGET_PROPERTY | Attribute::TARGET_PARAMETER)]
 #[TestCase("\x01x", "x", constructorArgs: [new Byte])]
+#[TestCase("\x01x", "x", constructorArgs: [Byte::class])]
 class LengthPrefixedString extends Definition
 {
-    public function __construct(public readonly Definition $prefix)
+    public readonly Definition $prefix;
+    /**
+     * @param class-string<Definition>|Definition $prefix
+     */
+    public function __construct(string|Definition $prefix)
     {
+        if(is_string($prefix)) {
+            $prefix = new $prefix();
+        }
+        $this->prefix = $prefix;
     }
 
     public function read(ReflectionParameter $refl, Reader $input, array $args): string
