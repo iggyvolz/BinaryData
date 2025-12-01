@@ -4,18 +4,62 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0a84df8e2cdd05c814307436618e03d7",
-    "packages": [],
+    "content-hash": "41dc9692d0036b323220223e7346a825",
+    "packages": [
+        {
+            "name": "iggyvolz/simple-attribute-reflection",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/iggyvolz/SimpleAttributeReflection.git",
+                "reference": "c098f2f50c33f96b1a828a0c5c6b2e4df1273c10"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/iggyvolz/SimpleAttributeReflection/zipball/c098f2f50c33f96b1a828a0c5c6b2e4df1273c10",
+                "reference": "c098f2f50c33f96b1a828a0c5c6b2e4df1273c10",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "vimeo/psalm": "^4.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Iggyvolz\\SimpleAttributeReflection\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "0BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Katie Volz",
+                    "email": "iggyvolz@gmail.com"
+                }
+            ],
+            "description": "Simpler reflection for attributes",
+            "support": {
+                "issues": "https://github.com/iggyvolz/SimpleAttributeReflection/issues",
+                "source": "https://github.com/iggyvolz/SimpleAttributeReflection/tree/v1.0"
+            },
+            "time": "2021-07-08T15:26:12+00:00"
+        }
+    ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "8.1.*",
+        "php": "^8.5",
         "php-64bit": "*"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.9.0"
 }

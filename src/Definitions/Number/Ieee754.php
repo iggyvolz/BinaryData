@@ -5,6 +5,8 @@ namespace iggyvolz\BinaryData\Definitions\Number;
 use iggyvolz\BinaryData\Definitions\Definition;
 use iggyvolz\BinaryData\Reader;
 use iggyvolz\BinaryData\Writer;
+use InvalidArgumentException;
+use ReflectionParameter;
 use const false;
 use const INF;
 use const NAN;
@@ -24,9 +26,9 @@ abstract class Ieee754 extends Definition
     {
     }
 
-    public function read(Reader $input): float
+    public function read(ReflectionParameter $refl, Reader $input): float
     {
-        if ((1 + $this->significandBits + $this->exponentBits) % 8 !== 0) throw new \InvalidArgumentException("Must use a multiple of 8 bits!");
+        if ((1 + $this->significandBits + $this->exponentBits) % 8 !== 0) throw new InvalidArgumentException("Must use a multiple of 8 bits!");
         $bytes = (1 + $this->significandBits + $this->exponentBits) / 8;
         $int = AbstractInteger::readInteger($input, $bytes, $this->bigEndian, true);
         $signBit = 1 & ($int >> ($this->significandBits + $this->exponentBits));
@@ -62,10 +64,10 @@ abstract class Ieee754 extends Definition
         return $readFloat;
     }
 
-    public function write(Writer $output, mixed $data): void
+    public function write(ReflectionParameter $refl, Writer $output, mixed $data): void
     {
         if(!is_float($data)) throw new \ValueError();
-        if ((1 + $this->significandBits + $this->exponentBits) % 8 !== 0) throw new \InvalidArgumentException("Must use a multiple of 8 bits!");
+        if ((1 + $this->significandBits + $this->exponentBits) % 8 !== 0) throw new InvalidArgumentException("Must use a multiple of 8 bits!");
         $bytes = (1 + $this->significandBits + $this->exponentBits) / 8;
         if ($data === 0.0) {
 
