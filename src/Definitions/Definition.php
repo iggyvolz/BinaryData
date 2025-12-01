@@ -9,6 +9,10 @@ use ReflectionParameter;
 /** @template T */
 abstract class Definition
 {
+    /**
+     * @var int|null The size of the object, if fixed
+     */
+    public ?int $size { get => null; }
     /** @param array $args *@return T */
     public abstract function read(ReflectionParameter $refl, Reader $input, array $args): mixed;
     /** @param T $data */

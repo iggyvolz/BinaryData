@@ -12,6 +12,8 @@ use function ord;
 
 abstract class AbstractInteger extends Definition
 {
+    public ?int $size { get => $this->bytes; }
+
     public function __construct(public readonly int $bytes, public readonly bool $bigEndian, public readonly bool $signed)
     {
     }

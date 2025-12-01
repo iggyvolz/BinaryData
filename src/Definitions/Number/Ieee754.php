@@ -18,6 +18,8 @@ use const true;
  */
 abstract class Ieee754 extends Definition
 {
+    public ?int $size { get => $this->significandBits + $this->exponentBits; }
+
     public function __construct(
         public readonly int $significandBits,
         public readonly int $exponentBits,

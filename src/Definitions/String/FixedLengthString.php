@@ -14,6 +14,7 @@ use ReflectionParameter;
 #[TestCase("hello", "hello", constructorArgs: [5])]
 class FixedLengthString extends Definition
 {
+    public ?int $size { get => $this->length; }
     public function __construct(public int $length)
     {
     }
