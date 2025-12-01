@@ -15,7 +15,7 @@ abstract class AbstractInteger extends Definition
     public function __construct(public readonly int $bytes, public readonly bool $bigEndian, public readonly bool $signed)
     {
     }
-    public function read(ReflectionParameter $refl, Reader $input): int
+    public function read(ReflectionParameter $refl, Reader $input, array $args): int
     {
         return self::readInteger($input, $this->bytes, $this->bigEndian, $this->signed);
     }

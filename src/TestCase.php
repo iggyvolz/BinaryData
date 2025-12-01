@@ -24,7 +24,7 @@ final class TestCase
     {
         try {
             $input = new StringReader($this->input);
-            $readValue = $definition->read(new ReflectionParameter([self::class, "test"], 0), $input);
+            $readValue = $definition->read(new ReflectionParameter([self::class, "test"], 0), $input, []);
             if (
                 $this->output !== $readValue &&
                 // NaN != NaN, not what we want here

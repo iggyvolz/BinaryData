@@ -26,7 +26,7 @@ abstract class Ieee754 extends Definition
     {
     }
 
-    public function read(ReflectionParameter $refl, Reader $input): float
+    public function read(ReflectionParameter $refl, Reader $input, array $args): float
     {
         if ((1 + $this->significandBits + $this->exponentBits) % 8 !== 0) throw new InvalidArgumentException("Must use a multiple of 8 bits!");
         $bytes = (1 + $this->significandBits + $this->exponentBits) / 8;

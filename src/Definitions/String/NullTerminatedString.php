@@ -15,7 +15,7 @@ use TypeError;
 #[TestCase("\0", "")]
 final class NullTerminatedString extends Definition
 {
-    public function read(ReflectionParameter $refl, Reader $input): string
+    public function read(ReflectionParameter $refl, Reader $input, array $args): string
     {
         $buf = "";
         while(($c = $input->read(1)) !== "\0") {

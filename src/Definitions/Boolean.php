@@ -14,7 +14,7 @@ use ReflectionParameter;
 #[TestCase("\x02", true, true)]
 final class Boolean extends Definition
 {
-    public function read(ReflectionParameter $refl, Reader $input): bool
+    public function read(ReflectionParameter $refl, Reader $input, array $args): bool
     {
         return $input->read(1) !== "\x00";
     }

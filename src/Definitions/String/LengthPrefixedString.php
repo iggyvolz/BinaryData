@@ -18,9 +18,9 @@ class LengthPrefixedString extends Definition
     {
     }
 
-    public function read(ReflectionParameter $refl, Reader $input): string
+    public function read(ReflectionParameter $refl, Reader $input, array $args): string
     {
-        $length = $this->prefix->read($refl, $input);
+        $length = $this->prefix->read($refl, $input, $args);
         return $input->read($length);
     }
 
