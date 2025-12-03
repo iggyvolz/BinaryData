@@ -2,8 +2,9 @@
 
 namespace iggyvolz\BinaryData;
 
-use iggyvolz\BinaryData\DebugPrinter;
+use Attribute;
 
+#[Attribute(Attribute::TARGET_PARAMETER | Attribute::TARGET_PROPERTY)]
 /**
  * @template-extends DebugPrinter<string,string>
  */
