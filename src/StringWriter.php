@@ -9,5 +9,7 @@ final class StringWriter implements Writer
     public function write(string $bytes): void
     {
         $this->data .= $bytes;
+        $this->tell += strlen($bytes);
     }
+    private(set) int $tell = 0;
 }
