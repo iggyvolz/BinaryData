@@ -16,7 +16,7 @@ abstract class Packet
         $args = [];
         foreach($constr->getParameters() as $parameter) {
             if($definition = AttributeReflection::getAttribute($parameter, Definition::class)) {
-                $args[] = $definition->read($parameter, $data, $args);
+                $args[$parameter->name] = $definition->read($parameter, $data, $args);
             } else {
                 throw new LogicException("No definition for parameter " . $parameter->getName() . " in " . static::class . "::__construct");
             }
