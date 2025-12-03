@@ -43,4 +43,16 @@ abstract class Packet
         $this->write($data);
         return $data->data;
     }
+    public function __debugInfo(): ?array
+    {
+        $data = [];
+        $class = new ReflectionClass($this);
+        foreach($class->getProperties() as $property) {
+            $data[$property->name] = $property->getValue($this);
+            foreach(AttributeReflection::getAttributes($property, DebugPrinter::class) as $debugPrinter) {
+                $data[$property->name] = $debugPrinter->handle($data[$property->name]);
+            }
+        }
+        return $data;
+    }
 }
