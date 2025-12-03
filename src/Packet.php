@@ -9,31 +9,38 @@ use ReflectionClass;
 
 abstract class Packet
 {
-    public static function fromString(string $data): static
+    public static function read(Reader $reader): static
     {
-        $data = new StringReader($data);
         $constr = ($cls = new ReflectionClass(static::class))->getConstructor();
         $args = [];
         foreach($constr->getParameters() as $parameter) {
             if($definition = AttributeReflection::getAttribute($parameter, Definition::class)) {
-                $args[$parameter->name] = $definition->read($parameter, $data, $args);
+                $args[$parameter->name] = $definition->read($parameter, $reader, $args);
             } else {
                 throw new LogicException("No definition for parameter " . $parameter->getName() . " in " . static::class . "::__construct");
             }
         }
         return $cls->newInstance(...$args);
     }
-    public function __toString(): string
+    public static function fromString(string $data): static
     {
-        $data = new StringWriter();
+        return static::read(new StringReader($data));
+    }
+    public function write(Writer $writer): void
+    {
         $constr = new ReflectionClass(static::class)->getConstructor();
         foreach($constr->getParameters() as $parameter) {
             if($definition = AttributeReflection::getAttribute($parameter, Definition::class)) {
-                $definition->write($parameter, $data, $this->{$parameter->name});
+                $definition->write($parameter, $writer, $this->{$parameter->name});
             } else {
                 throw new LogicException("No definition for parameter " . $parameter->getName() . " in " . static::class . "::__construct");
             }
         }
+    }
+    public function __toString(): string
+    {
+        $data = new StringWriter();
+        $this->write($data);
         return $data->data;
     }
 }
