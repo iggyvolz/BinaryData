@@ -16,9 +16,8 @@ abstract readonly class Packet
         foreach($constr->getParameters() as $parameter) {
             if($definition = AttributeReflection::getAttribute($parameter, Definition::class)) {
                 if($parameter->isVariadic()) {
-                    $args[$parameter->name] = [];
                     while(!$reader->eof) {
-                        $args[$parameter->name][] = $definition->read($parameter, $reader, $args);
+                        $args[] = $definition->read($parameter, $reader, $args);
                     }
                 } else {
                     $args[$parameter->name] = $definition->read($parameter, $reader, $args);
