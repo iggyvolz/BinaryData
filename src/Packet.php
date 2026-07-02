@@ -7,7 +7,7 @@ use Iggyvolz\SimpleAttributeReflection\AttributeReflection;
 use LogicException;
 use ReflectionClass;
 
-abstract class Packet
+abstract readonly class Packet
 {
     public static function read(Reader $reader): static
     {
@@ -15,7 +15,14 @@ abstract class Packet
         $args = [];
         foreach($constr->getParameters() as $parameter) {
             if($definition = AttributeReflection::getAttribute($parameter, Definition::class)) {
-                $args[$parameter->name] = $definition->read($parameter, $reader, $args);
+                if($parameter->isVariadic()) {
+                    $args[$parameter->name] = [];
+                    while(!$reader->eof) {
+                        $args[$parameter->name][] = $definition->read($parameter, $reader, $args);
+                    }
+                } else {
+                    $args[$parameter->name] = $definition->read($parameter, $reader, $args);
+                }
             } else {
                 throw new LogicException("No definition for parameter " . $parameter->getName() . " in " . static::class . "::__construct");
             }
@@ -31,7 +38,13 @@ abstract class Packet
         $constr = new ReflectionClass(static::class)->getConstructor();
         foreach($constr->getParameters() as $parameter) {
             if($definition = AttributeReflection::getAttribute($parameter, Definition::class)) {
-                $definition->write($parameter, $writer, $this->{$parameter->name});
+                if($parameter->isVariadic()) {
+                    foreach($this->{$parameter->name} as $value) {
+                        $definition->write($parameter, $writer, $value);
+                    }
+                } else {
+                    $definition->write($parameter, $writer, $this->{$parameter->name});
+                }
             } else {
                 throw new LogicException("No definition for parameter " . $parameter->getName() . " in " . static::class . "::__construct");
             }
