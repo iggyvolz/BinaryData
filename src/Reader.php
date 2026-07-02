@@ -6,4 +6,5 @@ interface Reader
 {
     public function read(int $bytes): string;
     public int $tell {get;}
+    public bool $eof {get;}
 }

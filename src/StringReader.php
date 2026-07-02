@@ -20,6 +20,6 @@ final class StringReader implements Reader
         return $ret;
     }
 
-    public bool $done { get => $this->data === ""; }
+    public bool $eof { get => $this->data === ""; }
     private(set) int $tell = 0;
 }

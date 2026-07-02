@@ -41,7 +41,7 @@ final readonly class TestCase
             ) {
                 return false;
             }
-            if (!$input->done) return false; // Ensure that we read all of the input
+            if (!$input->eof) return false; // Ensure that we read all of the input
             if (!$this->oneWay) {
                 $output = new StringWriter();
                 $definition->write(new ReflectionParameter([self::class, "test"], 0), $output, $this->output);
