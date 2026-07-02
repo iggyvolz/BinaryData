@@ -3,6 +3,7 @@
 namespace iggyvolz\BinaryData;
 
 use Attribute;
+use Closure;
 use Composer\InstalledVersions;
 use Composer\Semver\VersionParser;
 use iggyvolz\BinaryData\Definitions\Definition;
@@ -14,13 +15,16 @@ use Throwable;
 use function is_nan;
 
 #[Attribute(Attribute::TARGET_CLASS | Attribute::IS_REPEATABLE)]
-final class TestCase
+final readonly class TestCase
 {
     public function __construct(
-        public readonly string $input,
-        public readonly mixed $output,
-        public readonly bool $oneWay = false, // Only test input => output
-        public readonly array $constructorArgs = [],
+        public string $input,
+        public mixed $output,
+        public bool $oneWay = false, // Only test input => output
+        public array $constructorArgs = [],
+        public Closure $test = static function (mixed $a, mixed $b): bool {
+            return $a === $b;
+        },
     )
     {
     }
@@ -31,7 +35,7 @@ final class TestCase
             $input = new StringReader($this->input);
             $readValue = $definition->read(new ReflectionParameter([self::class, "test"], 0), $input, []);
             if (
-                $this->output !== $readValue &&
+                !(($this->test)($readValue, $this->output)) &&
                 // NaN != NaN, not what we want here
                 !(is_nan($this->output) && is_nan($readValue))
             ) {
@@ -42,7 +46,7 @@ final class TestCase
                 $output = new StringWriter();
                 $definition->write(new ReflectionParameter([self::class, "test"], 0), $output, $this->output);
                 $readValue = $output->data;
-                if ($readValue !== $this->input) return false;
+                if (!(($this->test)($readValue, $this->input))) return false;
             }
             return true;
         } catch(Throwable $t) {
