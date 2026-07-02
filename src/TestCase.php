@@ -46,7 +46,7 @@ final readonly class TestCase
                 $output = new StringWriter();
                 $definition->write(new ReflectionParameter([self::class, "test"], 0), $output, $this->output);
                 $readValue = $output->data;
-                if (!(($this->test)($readValue, $this->input))) return false;
+                if ($readValue !== $this->input) return false;
             }
             return true;
         } catch(Throwable $t) {
