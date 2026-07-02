@@ -5,7 +5,12 @@
   "require": {
     "php": "^8.5",
     "php-64bit": "*",
-    "iggyvolz/simple-attribute-reflection": "^1.0"
+    "iggyvolz/simple-attribute-reflection": "^1.0",
+    "composer-runtime-api": "^2.2",
+    "composer/semver": "^3.0"
+  },
+  "require-dev": {
+    "kcs/class-finder": "^0.6.0"
   },
   "autoload": {
     "psr-4": {
